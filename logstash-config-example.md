@@ -67,6 +67,10 @@ output {
 
 > https://www.youtube.com/watch?v=_qgS1m6NTIE&ab_channel=SundogEducationwithFrankKane
 
+> https://discuss.elastic.co/t/assign-default-value-to-a-field-if-no-value-is-present/135753/2
+
+> https://www.elastic.co/guide/en/logstash/current/event-dependent-configuration.html
+
 ```
 
 input {
