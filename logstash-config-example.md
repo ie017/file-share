@@ -42,7 +42,7 @@ output {
 
 ```
 
-# logstash_file_beat.conf without filter
+# logstash file beat.conf without filter
 
 ```
 
