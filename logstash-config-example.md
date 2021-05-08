@@ -101,3 +101,53 @@ output {
 }
 
 ```
+
+# logstash file beat.conf with multiple file beat should create different - different index in elastic search
+
+> https://stackoverflow.com/a/60978719/1175623
+
+```
+
+input {
+    beats {
+	    type => "logs"
+        port => "5044"
+    }
+}
+
+filter {
+    json {
+        source => "message"
+        target => "log"
+    }
+    if [log][@l] {
+    mutate { add_field => { "@level" => "%{[log][@l]}" } }
+    } else {
+    mutate { add_field => { "@level" => "Information" } }
+    }
+}
+
+output {
+  if "Error" == [@level]{
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "error_logs"
+    }
+  }
+  else if "Serilog.LogFile.WebApi" in [ServiceLogAppName]{
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "serilog.logfile.webapi"
+    }
+  }
+  else {
+    elasticsearch {
+      hosts => ["localhost:9200"]
+      index => "other.log"
+    }
+  }
+  stdout { codec => rubydebug }
+}
+
+```
+
