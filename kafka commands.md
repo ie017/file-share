@@ -1,3 +1,5 @@
+# Run zookeeper and kafka in Windows command prompt
+
 ### zookeeper
 ```
 .\bin\windows\zookeeper-server-start.bat .\config\zookeeper.properties
