@@ -26,7 +26,8 @@
 
 ```
 .\bin\windows\kafka-topics.bat --list --zookeeper localhost:2181
-
+```
+```
 .\bin\windows\kafka-topics.bat --list --bootstrap-server localhost:9092
 ```
 
@@ -34,16 +35,17 @@
 
 ```
 .\bin\windows\kafka-console-producer.bat --broker-list localhost:9092 --topic TestTopic123456
-
+```
+```
 .\bin\windows\kafka-console-producer.bat --bootstrap-server localhost:9092 --topic TestTopic123456
 ```
 
 ### Consume messages
 ```
 .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic TestTopic123456  --from-beginning
-
+```
+```
 .\bin\windows\kafka-console-consumer.bat --bootstrap-server localhost:9092 --topic TestTopic123456
-
 ```
 
 ### Consume List
@@ -81,7 +83,6 @@ Get-WmiObject win32_service | ?{$_.PathName -like '*nssm*'} | select Name, Displ
 
 ```
 .\nssm.exe install kafka C:\kafka\bin\windows\kafka-server-start.bat C:\kafka\config\server.properties
-
 ```
 
 ### Start kafka
