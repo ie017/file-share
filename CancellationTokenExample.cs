@@ -13,15 +13,22 @@ namespace CancellationTokenExample
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = cancellationTokenSource.Token;
 
-            Task task = Task.Run(() => GetLuckyNumberAsync(token), token);
-            //task.ContinueWith(t =>
-            //{
-            //    t.Exception?.Handle(e => true);
-            //}, TaskContinuationOptions.OnlyOnCanceled);
+            Task task = Task.Run(() => PrintLuckyNumberAsync(token), token);
+            task.ContinueWith(t =>
+            {
+                t.Exception?.Handle(e => true);
+                Console.WriteLine("-Stopped-");
+            }, TaskContinuationOptions.OnlyOnCanceled);
 
             Console.ReadLine();
             cancellationTokenSource.Cancel();
-            task.Wait();
+            try
+            {
+                task.Wait();
+            }
+            catch
+            {
+            }
         }
 
         private static void PrintLuckyNumber(int y)
@@ -29,7 +36,7 @@ namespace CancellationTokenExample
             Console.WriteLine($"\n\nYour lucky number is {y}");
         }
 
-        private static void GetLuckyNumberAsync(CancellationToken cancelToken)
+        private static void PrintLuckyNumberAsync(CancellationToken cancelToken)
         {
             var rand = new Random();
             int y = -1;
@@ -45,8 +52,7 @@ namespace CancellationTokenExample
                 if (cancelToken.IsCancellationRequested)
                 {
                     PrintLuckyNumber(y);
-                    return;
-                    //cancelToken.ThrowIfCancellationRequested();
+                    cancelToken.ThrowIfCancellationRequested();
                 }
             }
             PrintLuckyNumber(y);
