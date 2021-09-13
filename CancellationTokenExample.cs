@@ -8,7 +8,7 @@ namespace CancellationTokenExample
     {
         private static void Main(string[] args)
         {
-            Console.WriteLine("Generating numbers b/w 1 to 100...\nPress enter to find you number your lucky number\n\n");
+            Console.WriteLine("Press enter to get your lucky number\n\n");
 
             CancellationTokenSource cancellationTokenSource = new CancellationTokenSource();
             CancellationToken token = cancellationTokenSource.Token;
@@ -31,24 +31,18 @@ namespace CancellationTokenExample
             }
         }
 
-        private static void PrintLuckyNumber(int y)
-        {
-            Console.WriteLine($"\n\nYour lucky number is {y}");
-        }
-
         private static void PrintLuckyNumberAsync(CancellationToken cancelToken)
         {
             var rand = new Random();
             int y = -1;
             Console.Write("\b");
             int i = 0;
-            while (i++ < 10)
+            while (i++ < 100)
             {
-                y = rand.Next(1, 100);
+                y = rand.Next(1000, 9999);
                 Console.Write(y);
                 Thread.Sleep(100);
-                Console.Write("\b");
-                if (y > 9) Console.Write("\b");
+                Console.Write("\b\b\b\b");
                 if (cancelToken.IsCancellationRequested)
                 {
                     PrintLuckyNumber(y);
@@ -56,6 +50,11 @@ namespace CancellationTokenExample
                 }
             }
             PrintLuckyNumber(y);
+        }
+
+        private static void PrintLuckyNumber(int y)
+        {
+            Console.WriteLine($"\n\nYour lucky number is {y}");
         }
     }
 }
